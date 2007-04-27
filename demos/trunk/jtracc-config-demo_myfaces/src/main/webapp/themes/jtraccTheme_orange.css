@@ -1,0 +1,61 @@
+body .translationPane {
+    background-color: #fffad9;
+    border-color: #000;
+}
+
+body .translationPane .dojoFloatingPaneTitleBar {
+    margin: 0px;
+    height: 29px;
+    background-image: url( ../images/trans_back.gif );
+}
+
+body .translationPane .dojoFloatingPaneTitleBarIcon {
+    margin-left: 5px;
+    height: 29px;
+}
+
+body .translationPane .dojoFloatingPaneCloseIcon {
+    background-image: url( ../images/trans_close.gif );
+}
+
+body .translationPane .dojoFloatingPaneClient {
+    background-color: #fffad9;
+    border-style: none;
+}
+
+body .translationContainer {
+    background-color: #ffb400;
+    border: 1px solid #000;
+    position: relative;
+    left: 0px;
+    top: 0px;
+	height: 100%;
+    padding: 3px;
+    overflow: hidden;
+}
+
+body .translationContainerActive {
+    background-color: #fffad9;
+}
+
+html > body .translationContainer {
+	height: auto;
+}
+
+body .translationContainerOverlay {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
+}
+
+body .translationLink {
+    position: absolute;
+    width: 80px;
+    height: 15px;
+    overflow: hidden;
+    right: 3px;
+    bottom: 3px;
+}

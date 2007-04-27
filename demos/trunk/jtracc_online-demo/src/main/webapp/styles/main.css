@@ -1,0 +1,129 @@
+body {
+	margin: 0;
+	padding: 0;
+    overflow:-moz-scrollbars-vertical;
+}
+
+.demo_home {
+    text-align:center;
+    width:100%;
+}
+
+.demo_home_head {
+    vertical-align:middle;
+    font-size:2em;
+    width:100%;
+    text-align:center;
+    color:#0482f7;
+    font-weight:bold;
+    margin-top:30px;
+}
+
+.demo_home_head td {
+    width:33%;
+}
+
+.demo_headline {
+    font-family: Arial, sans-serif;
+    font-size: 1.4em;
+    font-weight:bold;
+}
+
+.demo_sub_headline {
+    text-align:center;
+    font-family: Arial, sans-serif;
+    font-size: 1.0em;
+    font-weight:bold;
+    width:100%;
+    margin-top:100px;
+}
+
+a {
+    color:#0482f7;
+}
+
+.demo_back_link {
+    font-family: Arial, sans-serif;
+    font-size: 1.0em;
+    font-weight:bold;
+    color:#0482f7;
+}
+
+.demo_sub_headline td {
+    width:33%;
+}
+
+.demo_info {
+    font-family: Arial, sans-serif;
+    font-size: 0.8em;
+    color:red;
+}
+
+.demo_info_bold {
+    font-weight:bold;
+}
+
+.demo_info_box {
+    margin:60px 0 30px 0;
+    padding:20px;
+    border-style:double;
+    border-color:red;
+}
+
+.demo_translation_mode {
+    color:dodgerblue;
+    text-decoration:none;
+    border:1px solid;
+    font-weight:bold;
+    margin-right:40px;
+}
+
+.demo_language_box {
+    background-color:lightyellow;
+    margin-right:40px;
+}
+/*
+.demo_translation_panel {
+    background:#ececec;
+    border-bottom:1px solid black;
+    margin:0px 0px 10px 0px;
+    position:fixed;
+    width:100%;
+    z-index:11;
+    padding:3px;
+    /*ie support:* /
+    position: expression("absolute");
+    top: expression(document.body.scrollTop - this.offsetHeight + this.offsetHeight);
+    left: 0;
+}
+*/
+
+.demo_translation_panel {
+    background:#ececec;
+    border-bottom:1px solid black;
+    margin:0 0 60px 0;
+    width:100%;
+    z-index:11;
+    padding:3px;
+}
+
+.demo_translation_panel td {
+    font-family: Arial, sans-serif;
+}
+
+.demo_translation_panel input {
+    border: 1px solid black;
+}
+
+.demo_language_box_label {
+    font-family: Arial, sans-serif;
+    font-variant:small-caps;    
+}
+
+.demo_content_box {
+    margin:0 60px 0 30px;
+}
+
+.demo_component_box {
+    margin-bottom:60px;
+}
