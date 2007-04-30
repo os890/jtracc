@@ -29,8 +29,6 @@ import java.util.*;
 
 /**
  * A typical simple backing bean, that is backed to <code>helloworld.jsp</code>
- *
- * @author Gerhard Petracek
  */
 public class HelloWorldBacking
 {
