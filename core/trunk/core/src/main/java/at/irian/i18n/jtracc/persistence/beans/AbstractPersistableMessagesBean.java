@@ -86,7 +86,7 @@ public abstract class AbstractPersistableMessagesBean extends AbstractMessagesBe
         if (localesUrlMapping.containsKey( locale.getLanguage() ))
         {
             urlToLoad = localesUrlMapping.get( locale.getLanguage() ).toString();
-            message = loadMessages( urlToLoad, locale, false ).getProperty( key );
+            message = loadMessages( urlToLoad, new Locale( locale.getLanguage() ), false ).getProperty( key );
         }
 
         if (message != null)
