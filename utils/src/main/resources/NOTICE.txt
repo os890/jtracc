@@ -1,0 +1,12 @@
+jtracc dependencies
+Copyright 2007 IRIAN Solutions Softwareentwicklungs- und Beratungsgesellschaft mbH
+
+This product includes software developed by:
+The Apache Software Foundation (http://www.apache.org/).
+
+------------------------------------------------------------------------
+See the file LICENSE.txt
+------------------------------------------------------------------------
+
+This product includes software developed by Dojo Foundation (http://dojotoolkit.org/foundation/)
+http://www.dojotoolkit.org/
