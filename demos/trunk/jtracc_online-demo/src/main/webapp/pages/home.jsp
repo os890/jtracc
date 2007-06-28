@@ -15,6 +15,14 @@
     <meta name="publisher" content="IRIAN Solutions Softwareentwicklungs- und Beratungsgesellschaft mbH"/>
     <meta name="copyright" content="IRIAN Solutions Softwareentwicklungs- und Beratungsgesellschaft mbH"/>
     <meta name="robots" content="index, nofollow"/>
+
+    <%--see google description--%>
+    <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+    _uacct = "UA-2092740-2";
+    urchinTracker();
+    </script>
 </head>
 <body>
 <f:view>
@@ -51,14 +59,6 @@
     <%--<h:messages/>--%>
 </h:form>
 </f:view>
-
-<%--see google description--%>
-<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
-</script>
-<script type="text/javascript">
-_uacct = "UA-2092740-2";
-urchinTracker();
-</script>
 
 </body>
 </html>
