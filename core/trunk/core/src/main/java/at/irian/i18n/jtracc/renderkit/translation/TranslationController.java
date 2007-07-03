@@ -22,12 +22,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import at.irian.i18n.jtracc.util.TranslationUtils;
 import at.irian.i18n.jtracc.util.LocaleUtils;
+import at.irian.i18n.jtracc.util.BeanUtils;
+import at.irian.i18n.jtracc.util.SettingsUtils;
 import at.irian.i18n.jtracc.renderkit.translation.internal.TranslationRenderKit;
 import at.irian.i18n.jtracc.renderkit.translation.internal.listener.TranslationRenderKitListener;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.*;
-import java.util.Locale;
+import javax.faces.component.UICommand;
 
 public class TranslationController
 {
@@ -51,6 +53,8 @@ public class TranslationController
                     .get(
                             TranslationRenderKitListener.PREVIOUS_RENDERKIT_VARIABLE_KEY );
 
+            UICommand translationLink = (UICommand) BeanUtils.getRequestBean( FacesContext.getCurrentInstance(), HtmlTranslationCommandLink.class.getName());
+
             if (previousKey == null)
             {
                 facesContext
@@ -66,6 +70,12 @@ public class TranslationController
 
                 // switch on
                 TranslationUtils.switchTranslationMode( true );
+
+                // workaround for myfaces 1.1.4
+                if(translationLink != null)
+                {
+                    translationLink.setValue( SettingsUtils.getComponentProperty( "html_translation_command_link_tag_label_on" ) );
+                }
             }
             else
             {
@@ -82,6 +92,12 @@ public class TranslationController
 
                 // switch off
                 TranslationUtils.switchTranslationMode( false );
+
+                // workaround for myfaces 1.1.4
+                if(translationLink != null)
+                {
+                    translationLink.setValue( SettingsUtils.getComponentProperty( "html_translation_command_link_tag_label_off" ) );
+                }
             }
         }
     }

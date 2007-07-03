@@ -18,7 +18,6 @@
  */
 package at.irian.i18n.jtracc.renderkit.translation.taglib;
 
-import at.irian.i18n.jtracc.util.SettingsUtils;
 import at.irian.i18n.jtracc.util.TranslationUtils;
 import at.irian.i18n.jtracc.util.FileUtils;
 import at.irian.i18n.jtracc.renderkit.translation.HtmlTranslationCommandLink;
@@ -34,8 +33,6 @@ public class HtmlTranslationCommandLinkTag extends HtmlCommandLinkTag
 
     public HtmlTranslationCommandLinkTag()
     {
-        super.setValue( SettingsUtils.getComponentProperty( "html_translation_command_link_tag_label" ) );
-
         if (!INIT_FINISHED)
         {
             String path = TranslationUtils.getMessagesLocation();

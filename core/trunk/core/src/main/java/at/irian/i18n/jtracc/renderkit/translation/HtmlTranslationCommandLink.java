@@ -18,8 +18,14 @@
  */
 package at.irian.i18n.jtracc.renderkit.translation;
 
+import at.irian.i18n.jtracc.util.SettingsUtils;
+import at.irian.i18n.jtracc.util.TranslationUtils;
+import at.irian.i18n.jtracc.util.BeanUtils;
+
 import javax.faces.event.ActionListener;
 import javax.faces.component.html.HtmlCommandLink;
+import javax.faces.context.FacesContext;
+import java.io.IOException;
 
 public class HtmlTranslationCommandLink extends HtmlCommandLink
 {
@@ -30,6 +36,26 @@ public class HtmlTranslationCommandLink extends HtmlCommandLink
     public HtmlTranslationCommandLink()
     {
         super.addActionListener( _translationActionListener );
+
+        // workaround for myfaces 1.1.4
+        // (to check translation mode and choose the right label)
+        // further usage - see TranslationController
+        BeanUtils.setRequestBean( FacesContext.getCurrentInstance(), HtmlTranslationCommandLink.class.getName(), this);
     }
 
+
+    public void encodeBegin(FacesContext context) throws IOException
+    {
+        // for myfaces 1.1.5
+        if(TranslationUtils.isTranslationMode())
+        {
+            setValue( SettingsUtils.getComponentProperty( "html_translation_command_link_tag_label_on" ) );
+        }
+        else
+        {
+            setValue( SettingsUtils.getComponentProperty( "html_translation_command_link_tag_label_off" ) );
+        }
+        
+        super.encodeBegin( context );    //To change body of overridden methods use File | Settings | File Templates.
+    }
 }
