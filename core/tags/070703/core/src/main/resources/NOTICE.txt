@@ -1,0 +1,6 @@
+jtracc core
+Copyright 2007 IRIAN Solutions Softwareentwicklungs- und Beratungsgesellschaft mbH
+
+------------------------------------------------------------------------
+See the file LICENSE.txt
+------------------------------------------------------------------------
