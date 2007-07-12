@@ -18,6 +18,8 @@
  */
 package at.irian.i18n.jtracc.util;
 
+import org.apache.myfaces.jtracc.renderkit.RendererUtils;
+
 import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -38,6 +40,11 @@ public class HtmlDiv extends UIOutput
         this.style = style;
     }
 
+    public boolean getRendersChildren()
+    {
+        return true;
+    }
+
     public void encodeBegin(FacesContext context) throws IOException
     {
         ResponseWriter writer = context.getResponseWriter();
@@ -52,6 +59,10 @@ public class HtmlDiv extends UIOutput
         }
     }
 
+    public void encodeChildren(FacesContext context) throws IOException
+    {
+        RendererUtils.renderChildren(context, this);
+    }
 
     public void encodeEnd(FacesContext context) throws IOException
     {
