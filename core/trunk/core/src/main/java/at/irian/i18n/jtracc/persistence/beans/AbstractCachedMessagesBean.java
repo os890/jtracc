@@ -18,14 +18,14 @@
  */
 package at.irian.i18n.jtracc.persistence.beans;
 
-import java.util.Map;
-import java.util.Hashtable;
 import java.util.Locale;
 import java.util.Properties;
 import java.io.IOException;
 
 import at.irian.i18n.jtracc.util.LocaleUtils;
 import at.irian.i18n.jtracc.util.TranslationUtils;
+import at.irian.i18n.jtracc.MessagesProvider;
+import at.irian.i18n.jtracc.persistence.CachedMessagesBean;
 
 import javax.faces.context.FacesContext;
 import javax.faces.application.FacesMessage;
@@ -35,9 +35,15 @@ import javax.faces.application.FacesMessage;
  * <p/>
  * !!!NEVER use/call specific JSF functionality (such as FacesContext) in the constructor of this class or of any subclass!!!
  */
-public abstract class CachedMessagesBean extends AbstractPersistableMessagesBean
+public abstract class AbstractCachedMessagesBean extends AbstractPersistableMessagesBean implements CachedMessagesBean
 {
-    private static Map properties = new Hashtable();
+    // in-memory messages cache
+    private static MessagesProvider messagesProvider = null;
+
+    public void setInMemoryMessagesProvider(MessagesProvider messagesProvider)
+    {
+        this.messagesProvider = messagesProvider;
+    }
 
     /**
      * @see at.irian.i18n.jtracc.persistence.beans.AbstractPersistableMessagesBean
@@ -46,10 +52,11 @@ public abstract class CachedMessagesBean extends AbstractPersistableMessagesBean
     {
         synchronized (this)
         {
-            String path = (String) localesUrlMapping.get( LocaleUtils.getLocaleString( locale ) );
+            String url = (String) localesUrlMapping.get( LocaleUtils.getLocaleString( locale ) );
 
             try
             {
+                // don't change unchanged messages
                 if (value.startsWith( TranslationUtils.TRANSLATION_MARKER_TRANSLATED ) == false)
                 {
                     return;
@@ -58,9 +65,9 @@ public abstract class CachedMessagesBean extends AbstractPersistableMessagesBean
                 value = value.replace( TranslationUtils.TRANSLATION_MARKER_TRANSLATED, "" );
 
                 // cache changed properties
-                Properties p = loadMessages( path, locale, true );
+                Properties p = loadMessages( url, locale, true );
                 p.put( key, value );
-                properties.put( LocaleUtils.getLocaleString( locale ), p );
+                messagesProvider.set( LocaleUtils.getLocaleString( locale ), p );
 
                 writeMessage( localesUrlMapping.get( LocaleUtils.getLocaleString( locale ) ).toString(), key, value );
             }
@@ -82,18 +89,20 @@ public abstract class CachedMessagesBean extends AbstractPersistableMessagesBean
      */
     protected Properties loadMessages(String url, Locale locale, boolean reload)
     {
-        if (properties.containsKey( LocaleUtils.getLocaleString( locale ) ) && !reload)
+        // resolve properties for specified locale in memory
+        if (messagesProvider.containsKey( LocaleUtils.getLocaleString( locale ) ) && !reload)
         {
-            return (Properties) properties.get( LocaleUtils.getLocaleString( locale ) );
+            return messagesProvider.get( LocaleUtils.getLocaleString( locale ) );
         }
 
+        // physically loading of properties
         Properties p;
 
         try
         {
             p = readMessages( url );
 
-            properties.put( LocaleUtils.getLocaleString( locale ), p );
+            messagesProvider.set( LocaleUtils.getLocaleString( locale ), p );
 
             return p;
         }

@@ -20,6 +20,8 @@ package at.irian.i18n.jtracc.renderkit.translation.internal.listener;
 
 import at.irian.i18n.jtracc.custom.translationpane.HtmlTranslationPaneRenderer;
 import at.irian.i18n.jtracc.Settings;
+import at.irian.i18n.jtracc.MessagesProvider;
+import at.irian.i18n.jtracc.persistence.CachedMessagesBean;
 import at.irian.i18n.jtracc.renderkit.translation.HtmlTranslationCommandLink;
 import at.irian.i18n.jtracc.renderkit.translation.model.HtmlTargetLocaleSelectOneMenu;
 import at.irian.i18n.jtracc.renderkit.translation.internal.TranslationRenderKit;
@@ -74,7 +76,7 @@ public class TranslationContextListener implements ServletContextListener
         String messagesBeanName = settings.getValue( "messages_bean_name" );
 
         Class mbcl;
-        Object messagesBean = null;
+        Object messagesBean;
 
         try
         {
@@ -84,8 +86,28 @@ public class TranslationContextListener implements ServletContextListener
         catch (Exception e)
         {
             e.printStackTrace();
+            return;
         }
 
+        // inject persistence provider
+        String messageProviderClass = settings.getValue( "messages_provider" );
+        MessagesProvider messagesProvider;
+        Class mpcl;
+
+        try
+        {
+            mpcl = TranslationUtils.loadClassForName( messageProviderClass );
+            messagesProvider = (MessagesProvider)mpcl.newInstance();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return;
+        }
+
+        ((CachedMessagesBean) messagesBean).setInMemoryMessagesProvider( messagesProvider );
+
+        // set backing bean
         servletContextEvent.getServletContext().setAttribute( messagesBeanName, messagesBean );
     }
 

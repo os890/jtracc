@@ -31,7 +31,7 @@ import java.util.Properties;
  * <p/>
  * !!!NEVER use/call specific JSF functionality (such as FacesContext) in the constructor of this class or of any subclass!!!
  */
-public class CachedPropertiesMessagesBean extends CachedMessagesBean
+public class CachedPropertiesMessagesBean extends AbstractCachedMessagesBean
 {
     protected void writeMessage(String url, String key, String value) throws IOException
     {
