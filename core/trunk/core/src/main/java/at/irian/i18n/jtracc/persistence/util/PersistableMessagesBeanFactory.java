@@ -56,7 +56,7 @@ public class PersistableMessagesBeanFactory
             Class persistenceBean = TranslationUtils.loadClassForName( beanToCreate );
             Class[] interfaces = persistenceBean.getInterfaces();
 
-            // prove configured filter class
+            // check interface
             for (int i = 0; i < interfaces.length; i++)
             {
                 if (interfaces[i].getName().equals( persistenceDelegationInterface ))
@@ -82,7 +82,7 @@ public class PersistableMessagesBeanFactory
             logger.warn( "couldn't load persistence delegation entry bean - check value of property: " + beanName, e );
         }
 
-        // default beans
+        // default implementation
         return new ListEntryMessagesBean();
     }
 
