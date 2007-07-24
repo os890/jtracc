@@ -127,7 +127,10 @@ public class TranslationRendererWrapper extends Renderer
             // simple components
             else
             {
-                addedContent = addGridEntry( context, attributeContent, grid, addedELTerms );
+                if(addedContent == false)
+                {
+                    addedContent = addGridEntry( context, attributeContent, grid, addedELTerms );
+                }
             }
         }
         this._translatableAttributeContent = null;
