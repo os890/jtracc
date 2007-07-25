@@ -129,7 +129,7 @@ public abstract class AbstractPersistableMessagesBean extends AbstractMessagesBe
             return message;
         }
 
-        return key.startsWith( SettingsUtils.getComponentProperty( "image_prefix" ) ) ? "" : TranslationUtils.getDefaultString();
+        return key.startsWith( SettingsUtils.getComponentProperty( "image_prefix" ) ) ? "" : TranslationUtils.getDefaultString() + " key: " + key;
     }
 
     /**
