@@ -22,6 +22,7 @@ import at.irian.i18n.jtracc.persistence.PersistenceDelegationEntryBean;
 import at.irian.i18n.jtracc.util.SettingsUtils;
 import at.irian.i18n.jtracc.util.TranslationUtils;
 import at.irian.i18n.jtracc.util.TranslationELUtils;
+import at.irian.i18n.jtracc.renderkit.translation.model.HtmlTargetLocaleSelectOneMenu;
 import org.apache.myfaces.jtracc.renderkit.html.HTML;
 
 import javax.faces.component.UIComponent;
@@ -93,7 +94,7 @@ public class TranslationRendererWrapper extends Renderer
 
         HtmlPanelGrid grid = (HtmlPanelGrid) context.getApplication()
                 .createComponent( HtmlPanelGrid.COMPONENT_TYPE );
-        grid.setColumns( 4 );
+        grid.setColumns( 6 );
 
         /*
         * create grid entries
@@ -378,7 +379,60 @@ public class TranslationRendererWrapper extends Renderer
             addedContent = true;
 
             /*
-             * content of first column
+             * content of first column - locale markers
+             */
+            // has to be a session map - to continue translation mode
+            Map sessionMap = context.getExternalContext().getSessionMap();
+            String keyLocaleMappingKey = SettingsUtils.getComponentProperty( "key_locale_mapping_key" );
+            Map keyLocaleMapping = (Map) sessionMap.get( keyLocaleMappingKey );
+
+            if (sessionMap.containsKey( keyLocaleMappingKey ))
+            {
+                keyLocaleMapping = (Map) sessionMap.get( keyLocaleMappingKey );
+            }
+
+            String key;
+            // TODO refactor
+            key = elTerm.substring( 2, elTerm.indexOf( "." ) );
+
+            Object o = context.getApplication().getVariableResolver().resolveVariable( context, key );
+
+            // TODO refactor
+            String propertyKey = elTerm.substring( elTerm.indexOf( "." ) + 1, elTerm.indexOf( "}" ) );
+            if (o instanceof PersistenceDelegationEntryBean)
+            {
+                propertyKey = propertyKey + "_" + ( (PersistenceDelegationEntryBean) o ).getIndex();
+            }
+
+            // create source locale marker component
+            String mappedLocale = null;
+            if (keyLocaleMapping != null)
+            {
+                mappedLocale = (String) keyLocaleMapping.get( propertyKey );
+            }
+            UIOutput sourceLocale = TranslationUtils.createLocaleMarkerIcon( context, mappedLocale );
+
+            // create target locale marker component
+            HtmlTargetLocaleSelectOneMenu menu = (HtmlTargetLocaleSelectOneMenu)context.getViewRoot().findComponent( "_jtraccTargetLocaleSelectOneMenuId");
+            UIOutput targetLocale = TranslationUtils.createLocaleMarkerIcon( context, (String) menu.getValue() );
+
+            /*
+             *  add source and target locale marker components
+             */
+            //add source locale
+            grid.getChildren().add( sourceLocale );
+
+            //add arrow
+            UIOutput arrow = new HtmlOutputText();
+            arrow.setValue( "->" );
+            grid.getChildren().add( arrow );
+
+            //add target locale
+            grid.getChildren().add( targetLocale );
+
+
+            /*
+             * content of second column
              */
             UIOutput tsText = (HtmlOutputText) context.getApplication()
                     .createComponent( HtmlOutputText.COMPONENT_TYPE );
@@ -396,7 +450,7 @@ public class TranslationRendererWrapper extends Renderer
             grid.getChildren().add( tsText );
 
             /*
-             * content of second column
+             * content of third column
              */
             UIInput tsInput = (HtmlInputText) context.getApplication().createComponent( HtmlInputText.COMPONENT_TYPE );
             tsInput.setValue( value );
@@ -408,44 +462,12 @@ public class TranslationRendererWrapper extends Renderer
             grid.getChildren().add( tsInput );
 
             /*
-             * content of third column
+             * content of fourth column
              */
             UIInput hiddenELContent = (HtmlInputHidden) context.getApplication()
                     .createComponent( HtmlInputHidden.COMPONENT_TYPE );
             hiddenELContent.setValue( elTerm );
             grid.getChildren().add( hiddenELContent );
-
-            /*
-             * content of fourth column - locale marker
-             */
-            // has to be a session map - to continue translation mode
-            Map sessionMap = context.getExternalContext().getSessionMap();
-            String keyLocaleMappingKey = SettingsUtils.getComponentProperty( "key_locale_mapping_key" );
-            Map keyLocaleMapping = (Map) sessionMap.get( keyLocaleMappingKey );
-
-            if (sessionMap.containsKey( keyLocaleMappingKey ))
-            {
-                keyLocaleMapping = (Map) sessionMap.get( keyLocaleMappingKey );
-            }
-
-            String key;
-            key = elTerm.substring( 2, elTerm.indexOf( "." ) );
-
-            Object o = context.getApplication().getVariableResolver().resolveVariable( context, key );
-
-            // TODO refactor
-            String propertyKey = elTerm.substring( elTerm.indexOf( "." ) + 1, elTerm.indexOf( "}" ) );
-            if (o instanceof PersistenceDelegationEntryBean)
-            {
-                propertyKey = propertyKey + "_" + ( (PersistenceDelegationEntryBean) o ).getIndex();
-            }
-
-            String mappedLocale = null;
-            if (keyLocaleMapping != null)
-            {
-                mappedLocale = (String) keyLocaleMapping.get( propertyKey );
-            }
-            grid.getChildren().add( TranslationUtils.createLocaleMarkerIcon( context, mappedLocale ) );
         }
 
         return addedContent;

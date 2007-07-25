@@ -227,16 +227,14 @@ public class TranslationUtils
 
         while (ci.hasNext())
         {
-            Object current = ci.next();
-
-            UIComponent c = (UIComponent) current;
+            UIComponent current = (UIComponent) ci.next();
             if (found)
             {
                 // hidden field
-                foundELInfoComponent = (UIInput) c;
+                foundELInfoComponent = (UIInput) current;
                 break;
             }
-            if (event.getComponent().getClientId( context ).equals( c.getClientId( context ) ))
+            if (event.getComponent().getClientId( context ).equals( current.getClientId( context ) ))
             {
                 found = true;
             }

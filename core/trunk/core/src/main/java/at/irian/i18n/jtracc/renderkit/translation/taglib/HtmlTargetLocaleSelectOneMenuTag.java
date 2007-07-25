@@ -41,7 +41,7 @@ import java.util.Locale;
  */
 public class HtmlTargetLocaleSelectOneMenuTag extends HtmlSelectOneMenuTag
 {
-    public static final String ID = "_targetLocaleSelectOneMenuId";
+    public static final String ID = "_jtraccTargetLocaleSelectOneMenuId";
 
     public HtmlTargetLocaleSelectOneMenuTag()
     {
