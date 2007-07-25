@@ -20,6 +20,7 @@ package at.irian.i18n.jtracc.util;
 
 import at.irian.i18n.jtracc.MessageResolver;
 import at.irian.i18n.jtracc.Settings;
+import at.irian.i18n.jtracc.persistence.util.PersistableMessagesBeanFactory;
 import at.irian.i18n.jtracc.components.filter.ComponentClassFilter;
 import at.irian.i18n.jtracc.components.filter.ComponentClassFilterImpl;
 import at.irian.i18n.jtracc.custom.translationpane.HtmlTranslationPaneRenderer;
@@ -125,6 +126,11 @@ public class TranslationUtils
     public static String getMessageResolverBeanName()
     {
         return SettingsUtils.getComponentProperty( "messages_bean_name" );
+    }
+
+    public static String getMessage(String key, Locale locale)
+    {
+        return PersistableMessagesBeanFactory.lookup( getMessageResolverBeanName() ).getMessage( key, locale );
     }
 
     /**
