@@ -94,7 +94,7 @@ public class TranslationRendererWrapper extends Renderer
 
         HtmlPanelGrid grid = (HtmlPanelGrid) context.getApplication()
                 .createComponent( HtmlPanelGrid.COMPONENT_TYPE );
-        grid.setColumns( 6 );
+        grid.setColumns( 8 );
 
         /*
         * create grid entries
@@ -430,6 +430,10 @@ public class TranslationRendererWrapper extends Renderer
             //add target locale
             grid.getChildren().add( targetLocale );
 
+            //add separator
+            UIOutput separator = new HtmlOutputText();
+            separator.setValue( ":" );
+            grid.getChildren().add( separator );
 
             /*
              * content of second column
@@ -452,6 +456,12 @@ public class TranslationRendererWrapper extends Renderer
             /*
              * content of third column
              */
+            //add arrow2
+            UIOutput arrow2 = new HtmlOutputText();
+            arrow2.setValue( "->" );
+            grid.getChildren().add( arrow2 );
+
+            //add input text
             UIInput tsInput = (HtmlInputText) context.getApplication().createComponent( HtmlInputText.COMPONENT_TYPE );
             tsInput.setValue( value );
 
