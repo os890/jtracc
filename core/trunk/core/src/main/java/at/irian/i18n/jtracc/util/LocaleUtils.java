@@ -23,10 +23,21 @@ import java.util.*;
 
 public class LocaleUtils
 {
-    //get selected value of <t2:changeLocale/> or <t2:targetLocale/>
+    //get selected value of <t2:targetLocale/>
     public static String getLocale(String id)
     {
         FacesContext context = FacesContext.getCurrentInstance();
+
+        String cachedKey = SettingsUtils.getComponentProperty( "jtracc_prefix" ) + id;
+
+        String value = (String)BeanUtils.getRequestBean( context, cachedKey );
+
+        if(value != null)
+        {
+            return value;
+        }
+
+        // find submitted value
         Iterator ki = context.getExternalContext().getRequestParameterMap().keySet().iterator();
 
         // get locale value
@@ -36,7 +47,10 @@ public class LocaleUtils
 
             if (o != null && o.toString().endsWith( id ))
             {
-                return (String) context.getExternalContext().getRequestParameterMap().get( o.toString() );
+                value = (String) context.getExternalContext().getRequestParameterMap().get( o.toString() );
+                // cache result in request scope
+                BeanUtils.setRequestBean( context, cachedKey, value );
+                return value;
             }
         }
         return null;
