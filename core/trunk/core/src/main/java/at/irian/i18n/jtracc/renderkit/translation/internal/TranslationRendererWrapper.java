@@ -19,10 +19,8 @@
 package at.irian.i18n.jtracc.renderkit.translation.internal;
 
 import at.irian.i18n.jtracc.persistence.PersistenceDelegationEntryBean;
-import at.irian.i18n.jtracc.util.SettingsUtils;
-import at.irian.i18n.jtracc.util.TranslationUtils;
-import at.irian.i18n.jtracc.util.TranslationELUtils;
-import at.irian.i18n.jtracc.renderkit.translation.model.HtmlTargetLocaleSelectOneMenu;
+import at.irian.i18n.jtracc.util.*;
+import at.irian.i18n.jtracc.renderkit.translation.taglib.HtmlTargetLocaleSelectOneMenuTag;
 import org.apache.myfaces.jtracc.renderkit.html.HTML;
 
 import javax.faces.component.UIComponent;
@@ -413,9 +411,8 @@ public class TranslationRendererWrapper extends Renderer
             UIOutput sourceLocale = TranslationUtils.createLocaleMarkerIcon( context, mappedLocale );
 
             // create target locale marker component
-            HtmlTargetLocaleSelectOneMenu menu = (HtmlTargetLocaleSelectOneMenu)context.getViewRoot().findComponent( "_jtraccTargetLocaleSelectOneMenuId");
-            UIOutput targetLocale = TranslationUtils.createLocaleMarkerIcon( context, (String) menu.getValue() );
-
+            UIOutput targetLocale = TranslationUtils.createLocaleMarkerIcon( context, LocaleUtils.getLocale( HtmlTargetLocaleSelectOneMenuTag.ID ));
+            
             /*
              *  add source and target locale marker components
              */
